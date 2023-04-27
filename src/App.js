@@ -9,7 +9,12 @@ function App() {
 
     if (todo !== "") {
       setTodos([{ id: `${todo}-${Date.now()}`, todo }, ...todos]);
+      setTodo("");
     }
+  };
+  const handleDelete = (id) => {
+    const updatedTodos = todos.filter((to) => to.id !== id);
+    setTodos(updatedTodos);
   };
 
   return (
@@ -20,6 +25,7 @@ function App() {
           <input
             type="text"
             className="input"
+            value={todo}
             onChange={(e) => setTodo(e.target.value)}
           />
           <button onClick={(e) => handleSubmit(e)}>Go</button>
@@ -27,10 +33,10 @@ function App() {
         <ul className="allTodos">
           {todos.map((t) => {
             return (
-              <li className="singleTodo">
+              <li className="singleTodo" key={t.id}>
                 <span className="todoText">{t.todo}</span>
                 <button>Edit</button>
-                <button>Delete</button>
+                <button onClick={() => handleDelete(t.id)}>Delete</button>
               </li>
             );
           })}
