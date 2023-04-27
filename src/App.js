@@ -10,12 +10,16 @@ function App() {
     e.preventDefault();
     if (editId) {
       const editedTodo = todos.find((t) => t.id === editId);
-      const updatedTodos = todos.map((t) =>
-        t.id === editedTodo.id
-          ? { id: t.id, todo: todo }
-          : { t: t.id, todo: t.todo }
-      );
-      setTodos(updatedTodos);
+      if (!editedTodo) {
+        window.alert("Todo was deleted while editing");
+      } else {
+        const updatedTodos = todos.map((t) =>
+          t.id === editedTodo.id
+            ? { id: t.id, todo: todo }
+            : { t: t.id, todo: t.todo }
+        );
+        setTodos(updatedTodos);
+      }
       setEditId(0);
       setTodo("");
       return;
